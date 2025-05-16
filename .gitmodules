@@ -1,0 +1,9 @@
+[submodule "agv-app-handling-service"]
+	path = agv-app-handling-service
+	url = git@github.com:fxxholub/agv-app-handling-service.git
+[submodule "agv-app-auth-service"]
+	path = agv-app-auth-service
+	url = git@github.com:fxxholub/agv-app-auth-service.git
+[submodule "agv-app-map-store-service"]
+	path = agv-app-map-store-service
+	url = git@github.com:fxxholub/agv-app-map-store-service.git
