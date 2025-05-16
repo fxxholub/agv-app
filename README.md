@@ -49,6 +49,6 @@ This repository does not contain any UI. The frontend application is confidentia
 ## Local usage
 
 1) Init and update the submodules: `git submodule update --init --recursive`
-2) Setup `ProcessConfig/config.json`, read more in [Handling Service README](/agv-app-handling-service/README.md)
+2) Setup `ProcessConfig/config.json`, read more in [Handling Service README](https://github.com/fxxholub/agv-app-handling-service.git)
 3) Setup a common `.env` file with environment variables based on each service
 4) Build and run the application: `docker compose up --build -d`
