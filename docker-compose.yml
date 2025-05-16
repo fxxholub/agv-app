@@ -1,0 +1,74 @@
+services:
+
+  # agv-app-frontend-service:
+  #   image: agv-app-frontend-service
+  #   container_name: agv-app-frontend-service
+  #   restart: always
+  #   build:
+  #     context: ./agv-app-frontend-service
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "8000:80"
+
+  agv-app-handling-service:
+    image: agv-app-handling-service
+    container_name: agv-app-handling-service
+    restart: always
+    platform: linux/arm64
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production # Development, Staging or Production
+    build:
+      context: ./agv-app-handling-service
+      dockerfile: Dockerfile
+      args:
+        BUILD_CONFIGURATION: Debug # Debug or Release (defaults to Release)
+    ports:
+      - "8010:8080"
+      - "8011:8081"
+    volumes:
+      - ./ProcessConfig:/app/ProcessConfig
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - agv-ros
+
+  agv-app-auth-service:
+    image: agv-app-auth-service
+    container_name: agv-app-auth-service
+    restart: always
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    build:
+      context: ./agv-app-auth-service
+      dockerfile: Dockerfile
+      args:
+        BUILD_CONFIGURATION: Debug
+    ports:
+      - "8020:8080"
+      - "8021:8081"
+    volumes:
+     - agv-app-auth-service-data:/app/data
+
+  agv-app-map-store-service:
+    image: agv-app-map-store-service
+    container_name: agv-app-map-store-service
+    restart: always
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    build:
+      context: ./agv-app-map-store-service
+      dockerfile: Dockerfile
+      args:
+        BUILD_CONFIGURATION: Debug
+    ports:
+      - "8030:8080"
+      - "8031:8081"
+    volumes:
+     - agv-app-map-store-service-data:/app/data
+
+volumes:
+  agv-app-auth-service-data:
+  agv-app-map-store-service-data:
+
+networks:
+  agv-ros:
+    external: true
